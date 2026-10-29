@@ -9,6 +9,7 @@ SHOPLINE Payments 金流串接的**實戰筆記**，做成 [Agent Skill](https:/
 - Webhook 驗簽、一個網域一個 Webhook 的「收款中樞」、Webhook 沒到時用 `sessions/query` 補查
 - **Apple Pay 第一次失敗、1 分鐘後成功**的原因與診斷方法
 - 沙盒是多人共用帳號、`2005 Access Denied` 怎麼查、不產生交易的金鑰檢查
+- **綁卡訂閱（內嵌 SDK）**：首次綁卡、`Recurring` 續扣、3D 不可被打斷、CSP 放行清單、排程與重試設計
 - 付款後寄序號信（Cloudflare Email Sending）、一組序號同時一台裝置的授權
 
 API 欄位表請看[官方文件](https://docs.shoplinepayments.com/)，或
@@ -23,6 +24,7 @@ references/webhook-hub.md             # 驗簽、處理規則、補查、收款�
 references/apple-pay.md               # Apple Pay 學到的事
 references/sandbox-and-credentials.md # 沙盒、金鑰、2005、正式環境驗收
 references/license-and-email.md       # 付款後寄信、單一裝置授權
+references/card-binding-subscription.md # 內嵌 SDK 綁卡、每月自動扣款
 references/gotchas.md                 # 症狀對照表
 scripts/checkout-worker.mjs           # Workers + D1 範例：建 session、入帳、補查、驗簽
 scripts/webhook-hub.mjs               # 收款中樞範例
@@ -36,10 +38,10 @@ Claude Code 會在你問到 SHOPLINE 串接時自動使用。
 
 ## 驗證範圍與限制
 
-- 驗證日期：2026-10-29；正式環境、導轉式、`TWD`、信用卡與 Apple Pay。
+- 驗證日期：2026-10-29（綁卡訂閱 2026-10-30 補充）；正式環境、導轉式、`TWD`、信用卡與 Apple Pay。
 - **沒有直接抓到實際的 Webhook body 形狀**（`payment/get` 的形狀有驗證）。範例程式同時嘗試多個欄位並以 `sessionId` 備援，
   請在你的環境以真實通知確認。
-- LINE Pay、街口、ATM、分期、內嵌式（SDK）、平台特店未涵蓋。
+- LINE Pay、街口、ATM、分期、平台特店未涵蓋；內嵌 SDK 只涵蓋信用卡綁卡訂閱（第一次真實續扣尚未驗證）。
 - 範例程式是改寫自實際專案的精簡版，**未附完整測試**；上線前請自行補單元測試與端對端驗收。
 - 本專案與 SHOPLINE 無關，內容可能隨官方更新而過時，請以官方文件為準。
 

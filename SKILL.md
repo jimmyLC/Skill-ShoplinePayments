@@ -43,7 +43,9 @@ metadata:
    金鑰錯 → `2005`。不會建立任何交易。
 10. **`language` 只收 `en`、`zh-TW`**（已測；其他值未驗證）。導轉用 **HTTP 302**，不要 iframe 或 `window.open`。
 
-## 流程（建議架構）
+> **要做月租／自動續扣？** 導轉式結帳不能綁卡，請改看 `references/card-binding-subscription.md`（內嵌 SDK，已用正式環境驗證首次付款與綁卡）。
+
+## 流程（建議架構，一次性付款）
 
 ```
 App/前端 ──POST /orders──▶ Worker：建單（金額由伺服器固定，不收前端金額）
@@ -66,6 +68,7 @@ App ──GET /orders/:id──▶ Worker：待付款時 sessions/query 補查 �
 | Apple Pay：條件、第一次失敗、怎麼診斷 | `references/apple-pay.md` |
 | 沙盒與金鑰：共用帳號、2005、正式環境驗收 | `references/sandbox-and-credentials.md` |
 | 付款後寄序號信、單一裝置授權（選用） | `references/license-and-email.md` |
+| **綁卡訂閱**：內嵌 SDK、每月自動扣款、3D、CSP、排程續扣 | `references/card-binding-subscription.md` |
 | 錯誤與症狀對照表 | `references/gotchas.md` |
 | 可直接改用的範例程式（已去識別） | `scripts/` |
 

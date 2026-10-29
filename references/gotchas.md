@@ -16,3 +16,6 @@
 | 訂單編號必須唯一（`1001 Order exist`） | `referenceId` 重複 | 用隨機訂單編號；重試用 `idempotentKey` |
 | 退款 | 本專案數位商品不退款，客訴時到後台手動退 | 後台交易紀錄 → 訂單 → 退款；Webhook 會送 `trade.refund.*` |
 | `requestId` 被拒 | 超過 32 字元 | 16 bytes 隨機轉 32 位十六進位 |
+| 內嵌卡片表單一片灰色不消失 | CSP 擋住 SHOPLINE／風控網域 | 放行清單見 `card-binding-subscription.md` |
+| 內嵌付款送出後又跳回首頁、3D 沒出現 | `payment.pay()` 後自己換頁，取消了 3D | `pay()` 後不要導頁，只設 30 秒保底 |
+| 後台出現 `RL…` 開頭、不是我們單號的交易 | 綁卡驗證的小額授權 | 到後台確認已取消／退回 |
